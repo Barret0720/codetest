@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="../assets/img/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <link rel="stylesheet" href="./dist/style.min.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" crossorigin="anonymous"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container" id="app">
+        <img src="src/maintext.png" style="display:block; margin:auto;" alt="活動抬頭">
+        <br>
+        <h5 class="mt-5">調頻方式</h5>
+        <p>
+          舟舟會每日傳送金錢靈氣以及進行清理釋放限制金錢豐盛的印記及信念。  <br>
+          並每日配合當天馬雅13月亮曆能量進行信念下載。 <br>
+          傳送結束後每日通知，大家輕鬆感受即可。
+        </p>
+      
+        <h5 class="mt-5">調頻費用</h5>
+        <ul>
+          <li>每月1-15日 666 元</li>
+          <li>每月16日-月底 666 元</li>
+          <li>兩期合報 1200 元</li>
+        </ul>
+        <p>若合報兩期調頻服務，可以1000元加購希塔療癒服務一次</p>
+
+        <h2 style="color: black; text-align: center;">  預約調頻</h2>
+        <section class="row">
+            <div class="twelve column">
+                <div class="box">
+                    <h2>姓名(真實姓名)：</h2>
+                    <input class="u-full-width" id="name" type="text" placeholder="請輸入您的姓名">
+                    <h2>本次願望(與金錢相關)：</h2>
+                    <input class="u-full-width" id="hope" type="text" placeholder="請輸入您的願望">
+                    <h2>報名期別：</h2>
+                    <div class="timeSelect">
+                        <!-- <div>
+                            <input type="checkbox" id="time" name="time1" value="10/1-10/15(666元)">
+                            <label for="time1">10/1-10/15(666元)</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="time" name="time1" value="10/16-10/31(666元)">
+                            <label for="time1">10/16-10/31(666元)</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="time" name="time1" value="10月份兩期合報(1200元)">
+                            <label for="time1">10月份兩期合報(1200元)</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="time" name="time1" value="加購希塔療癒(1000元)">
+                            <label for="time1">加購希塔療癒(1000元)</label>
+                        </div> -->
+                    </div>
+                    <h2>你是否同意請造物主下載以下信念？由舟舟老師幫你見證</h2>
+                    <div>
+                        <input type="checkbox" id="agree" name="agree" value="是">
+                        <label for="agree">是</label>
+                    </div>
+
+                    <h2>匯款末五碼：</h2>
+                    <input class="u-full-width" id="money" type="text" placeholder="請輸入匯款末五碼">
+
+                </div>
+            </div>
+        </section>
+        <button class="button-primary" style="background-color: green;" onclick="myFunction()">確認送出</button>
+      
+
+    </div>
+
+
+
+    <script>
+        function myFunction() {
+            let name = document.querySelector('#name').value;
+            let hope = document.querySelector('#hope').value;
+            let time = document.querySelector('#time').value;
+            let agree = document.querySelector('#agree').value;
+            let money = document.querySelector('#money').value;
+   
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfVZQIwIFjpkqEtcOmMq1Bkd9DTdTFXWe68YMOcCn6zMhJByg/formResponse',
+                    data: {
+                        "entry.2133184942": name,
+                        "entry.1376658044": hope,
+                        "entry.803029771" : time,
+                        "entry.172598818" : agree,
+                        "entry.351390014" : money
+                    },
+                });
+
+
+
+        
+        }
+    </script>
+
+<script>
+    // add Get Data for time
+    // 不要問我為什麼要寫在這裡，我也很無奈
+  
+    var AreaSheetID = "1QZsFsVoLZMAcEZA-R3wLgcKkeMya_bbdB0_q2y2iqHI", // google 試算表 ID
+        TableID = "719023705", // 工作表代號 ?gid=
+        Sql = "select C where C IS NOT NULL ", // SQL 語法
+        SqlString = encodeURIComponent(Sql),
+        AreaCallback = "callback2"; // 回呼函數名稱
+  
+    $.getScript("https://spreadsheets.google.com/tq?tqx=responseHandler:" + AreaCallback + "&tq=" + SqlString + "&key=" + AreaSheetID + "&gid=" + TableID);
+  
+  
+    window[AreaCallback] = function (json) {
+      
+    var rowArray = json.table.rows,
+        rowLength = rowArray.length,
+        dataGroup;
+        console.log(rowArray);
+  
+    for (var i = 2; i < rowLength; i++) {
+        dataGroup = rowArray[i].c;
+  
+        var value = dataGroup[0].v;
+        var html = `<div>
+            <input type="checkbox" id="time" name="time1" value="${value}">
+            <label for="time1">${value}</label>
+            </div>`;
+  
+      $('.timeSelect').append(html);
+  
+      }
+    };
+  </script>
+
+</body>
+
+</html>
+
